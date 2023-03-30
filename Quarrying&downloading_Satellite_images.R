@@ -3,14 +3,14 @@ library(devtools)
 install.packages('htmltools')
 devtools::install_github('16EAGLE/getSpatialData')
 library(getSpatialData)
-set_archive('C:/Users/HP/Desktop/Lectures/Introduction_to_programming/Rstatistics/FridayPractice/gSD')
+set_archive('C:/Users/HP/Desktop/Classification/satellite_images')
 
 set_aoi() # load area of interest if you have any else;
 
 view_aoi() #select your area of interest in the viewer
 
 # Time duration of your dataset
-time_range <- c('2022-07-01', '2022-07-30')
+time_range <- c('2022-06-01', '2022-10-30')
 
 # login
 login_CopHub(username = 'christobaltobbin') # type in your password to login
@@ -39,7 +39,7 @@ view_previews(records)
 records$area <- sf::st_area(records)
 # class(records$area)
 records$area <- units::set_units(records$area, 'km^2') #converts from m^2 to km^2
-records <- records[as.numeric(records$area) > 1000] #to grep all tiles with area above 1000km^2
+records <- records[as.numeric(records$area) > 1000] #to grab all tiles with area above 1000km^2
 
 #check whether records are ready for download
 records <-check_availability(records)
