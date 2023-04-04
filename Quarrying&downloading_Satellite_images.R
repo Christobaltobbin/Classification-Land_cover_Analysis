@@ -3,6 +3,9 @@ library(devtools)
 install.packages('htmltools')
 devtools::install_github('16EAGLE/getSpatialData')
 library(getSpatialData)
+library(rgdal)
+library(sp)
+
 set_archive('C:/Users/HP/Desktop/Classification/satellite_images')
 
 # Load Area of interest
@@ -17,7 +20,7 @@ set_aoi(aoi) #if you have an aoi you can place it in the bracket and load
 view_aoi()
 
 # Time duration of your dataset
-time_range <- c('2022-01-01', '2022-12-30')
+time_range <- c('2022-06-01', '2022-10-30')
 
 # login
 login_CopHub(username = 'christobaltobbin')
