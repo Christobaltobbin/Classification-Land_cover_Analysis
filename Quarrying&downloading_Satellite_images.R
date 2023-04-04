@@ -1,26 +1,32 @@
-# Install Packages
+# First install github
 library(devtools)
 install.packages('htmltools')
 devtools::install_github('16EAGLE/getSpatialData')
 library(getSpatialData)
 set_archive('C:/Users/HP/Desktop/Classification/satellite_images')
 
-set_aoi() # load area of interest if you have any else;
+# Load Area of interest
+aoi <- readOGR('C:/Users/HP/Desktop/Classification/aoi/aberdares.shp')
 
-view_aoi() #select your area of interest in the viewer
+# assign a projection
+proj4string(aoi) <- CRS('+proj=longlat +datum=WGS84')
+aoi
+
+set_aoi(aoi) #if you have an aoi you can place it in the bracket and load
+
+view_aoi()
 
 # Time duration of your dataset
-time_range <- c('2022-06-01', '2022-10-30')
+time_range <- c('2022-01-01', '2022-12-30')
 
 # login
-login_CopHub(username = 'christobaltobbin') # type in your password to login
+login_CopHub(username = 'christobaltobbin')
 
-get_products() # displays the data you can query
-
-# querying images
+get_products() #this is to see the data you can query
+# query
 records <- get_records(time_range = time_range,
                        products = 'sentinel-2')
-View(records) # displays queried images
+View(records) #this displays your queried data
 
 # filter by level
 records <- records[records$level == 'Level-2A',]
@@ -39,7 +45,7 @@ view_previews(records)
 records$area <- sf::st_area(records)
 # class(records$area)
 records$area <- units::set_units(records$area, 'km^2') #converts from m^2 to km^2
-records <- records[as.numeric(records$area) > 1000] #to grab all tiles with area above 1000km^2
+records <- records[as.numeric(records$area) > 1000] #to grep all tiles with area above 1000km^2
 
 #check whether records are ready for download
 records <-check_availability(records)
