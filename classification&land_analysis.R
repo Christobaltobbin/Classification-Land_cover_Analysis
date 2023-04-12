@@ -243,5 +243,20 @@ ggsave("C:/Users/HP/Desktop/Classification/classified/classified_map_bweri_2022.
        width = 10, height = 10, dpi = 300)
 
 #------------------------------------------------------------------------------------------------------------------------------#
-#                                 year =2019
+#                                 Post Classification
 #------------------------------------------------------------------------------------------------------------------------------#
+classified_19x10 <- classified_19$layer*10
+classified_19_22 <- classified_19x10 + classified_22$layer
+head(classified_19_22)
+
+color_pal <- colorRampPalette(c('#00007F','blue','darkgreen','red', 'grey','sandybrown','green', 'yellow','#366c36'))
+
+# ggplot
+ggplot() + ggR(classified_19_22, geom_raster = T, ggLayer = T) +
+  scale_fill_gradientn(colors = color_pal(100)) +
+  labs(title = "Post Classified Map of Bweri")+coord_sf(crs = st_crs(sent2_19_croped), datum = st_crs(4326)) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+# save your plot
+ggsave("C:/Users/HP/Desktop/Classification/classified/post_classified_map_bweri.png",
+       width = 10, height = 10, dpi = 300)
