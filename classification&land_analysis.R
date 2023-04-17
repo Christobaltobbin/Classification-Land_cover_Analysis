@@ -11,10 +11,10 @@ sapply(packages, require, character.only=TRUE)
 set.seed(12345)
 
 # set your working directory
-setwd('C:/Users/HP/Desktop/Classification')
+setwd('C:/Users/Chris/Desktop/Classification')
 
 # Load Area of interest
-aoi <- readOGR('C:/Users/HP/Desktop/Classification/aoi/shapefile/Shapefile_1.shp')
+aoi <- readOGR('C:/Users/Chris/Desktop/Classification/aoi/shapefile/Shapefile_1.shp')
 # aoi
 
 # view aoi
@@ -40,7 +40,7 @@ sent2_19_croped <- crop(sent2_19_stack, aoi)
 plotRGB(sent2_19_croped, r=3, g=2, b=1, stretch='hist')
 
 # Load training data
-training_data_19 <- readOGR("C:/Users/HP/Desktop/Classification/training_data/training_data_19.shp")
+training_data_19 <- readOGR("C:/Users/Chris/Desktop/Classification/training_data/training_data_19.shp")
 # training_data_19$class_id
 
 #  convert the polygons to points and extract values
@@ -113,7 +113,7 @@ confusion_matrix
 classified_19 <- predict(sent2_19_croped, RFmodel_19, type = 'raw')
 
 # save your classified image
-writeRaster(classified_19, filename = "C:/Users/HP/Desktop/Classification/classified/Bweri_19.tif", overwrite=TRUE)
+writeRaster(classified_19, filename = "C:/Users/Chris/Desktop/Classification/classified/Bweri_19.tif", overwrite=TRUE)
 
 cols <- c("blue", "darkgreen", "red", "sandybrown","green")
 
@@ -129,7 +129,7 @@ ggplot() + ggR(classified_19, geom_raster = T, ggLayer = T) +
   labs(title = "Classified Map of Bweri 2019")+coord_sf(crs = st_crs(sent2_19_croped), datum = st_crs(4326)) +
   theme(plot.title = element_text(hjust = 0.5))
 # save your plot
-ggsave("C:/Users/HP/Desktop/Classification/classified/classified_map_bweri_2019.png",
+ggsave("C:/Users/Chris/Desktop/Classification/classified/classified_map_bweri_2019.png",
        width = 10, height = 10, dpi = 300)
 
 #-----------------------------------------------------------------------------------------------------------------------------#
@@ -150,7 +150,7 @@ sent2_22_croped <- crop(sent2_22_stack, aoi)
 plotRGB(sent2_22_croped, r=3, g=2, b=1, stretch='hist')
 
 # Load training data
-training_data_22 <- readOGR("C:/Users/HP/Desktop/Classification/training_data/training_data_22.shp")
+training_data_22 <- readOGR("C:/Users/Chris/Desktop/Classification/training_data/training_data_22.shp")
 # training_data_19$class_id
 
 #  convert the polygons to points and extract values
@@ -223,7 +223,7 @@ confusion_matrix
 classified_22 <- predict(sent2_22_croped, RFmodel_22, type = 'raw')
 
 # save your classified image
-writeRaster(classified_22, filename = "C:/Users/HP/Desktop/Classification/classified/Bweri_22.tif", overwrite=TRUE)
+writeRaster(classified_22, filename = "C:/Users/Chris/Desktop/Classification/classified/Bweri_22.tif", overwrite=TRUE)
 
 cols <- c("blue", "darkgreen", "red", "sandybrown","green")
 
@@ -239,7 +239,7 @@ ggplot() + ggR(classified_22, geom_raster = T, ggLayer = T) +
   labs(title = "Classified Map of Bweri 2022")+coord_sf(crs = st_crs(sent2_22_croped), datum = st_crs(4326)) +
   theme(plot.title = element_text(hjust = 0.5))
 # save your plot
-ggsave("C:/Users/HP/Desktop/Classification/classified/classified_map_bweri_2022.png",
+ggsave("C:/Users/Chris/Desktop/Classification/classified/classified_map_bweri_2022.png",
        width = 10, height = 10, dpi = 300)
 
 #------------------------------------------------------------------------------------------------------------------------------#
@@ -258,11 +258,14 @@ ggplot() + ggR(classified_19_22, geom_raster = T, ggLayer = T) +
   theme(plot.title = element_text(hjust = 0.5))
 
 # save your plot
-ggsave("C:/Users/HP/Desktop/Classification/classified/post_classified_map_bweri.png",
+ggsave("C:/Users/Chris/Desktop/Classification/classified/post_classified_map_bweri.png",
        width = 10, height = 10, dpi = 300)
 
 
-# Land Cover Change Classification
+#------------------------------------------------------------------------------------------------------------------------------#
+#                              Land Cover Change Classification
+#------------------------------------------------------------------------------------------------------------------------------#
+
 Landcoverchange <- classified_22-classified_19
 
 color_pal <- colorRampPalette(c('#00007F','blue','darkgreen','red', 'grey','sandybrown','green', 'yellow','#366c36'))
@@ -274,5 +277,5 @@ ggplot() + ggR(Landcoverchange, geom_raster = T, ggLayer = T) +
   theme(plot.title = element_text(hjust = 0.5))
 
 # save your plot
-ggsave("C:/Users/HP/Desktop/Classification/classified/Landcoverchange.png",
+ggsave("C:/Users/Chris/Desktop/Classification/classified/Landcoverchange.png",
        width = 10, height = 10, dpi = 300)
