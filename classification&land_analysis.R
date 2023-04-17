@@ -113,7 +113,7 @@ confusion_matrix
 classified_19 <- predict(sent2_19_croped, RFmodel_19, type = 'raw')
 
 # save your classified image
-writeRaster(classified_19, filename = "C:/Users/HP/Desktop/Classification/classified/Bweri_19.tif")
+writeRaster(classified_19, filename = "C:/Users/HP/Desktop/Classification/classified/Bweri_19.tif", overwrite=TRUE)
 
 cols <- c("blue", "darkgreen", "red", "sandybrown","green")
 
@@ -223,7 +223,7 @@ confusion_matrix
 classified_22 <- predict(sent2_22_croped, RFmodel_22, type = 'raw')
 
 # save your classified image
-writeRaster(classified_22, filename = "C:/Users/HP/Desktop/Classification/classified/Bweri_22.tif")
+writeRaster(classified_22, filename = "C:/Users/HP/Desktop/Classification/classified/Bweri_22.tif", overwrite=TRUE)
 
 cols <- c("blue", "darkgreen", "red", "sandybrown","green")
 
@@ -259,4 +259,20 @@ ggplot() + ggR(classified_19_22, geom_raster = T, ggLayer = T) +
 
 # save your plot
 ggsave("C:/Users/HP/Desktop/Classification/classified/post_classified_map_bweri.png",
+       width = 10, height = 10, dpi = 300)
+
+
+# Land Cover Change Classification
+Landcoverchange <- classified_22-classified_19
+
+color_pal <- colorRampPalette(c('#00007F','blue','darkgreen','red', 'grey','sandybrown','green', 'yellow','#366c36'))
+
+# ggplot
+ggplot() + ggR(Landcoverchange, geom_raster = T, ggLayer = T) +
+  scale_fill_gradientn(colors = color_pal(100)) +
+  labs(title = "Post Classified Map of Bweri")+coord_sf(crs = st_crs(Landcoverchange), datum = st_crs(4326)) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+# save your plot
+ggsave("C:/Users/HP/Desktop/Classification/classified/Landcoverchange.png",
        width = 10, height = 10, dpi = 300)
